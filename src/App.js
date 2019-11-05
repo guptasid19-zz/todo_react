@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Tasks from './Tasks';
+import AddTask from './AddTask';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      tasks: [
+        {id: 1, title: 'hello'},
+        {id: 2, title: 'hello2'}
+      ]
+    }
+  }
+
+  addTask = (task) => {
+    task.id = Math.random();
+    let tasks = [...this.state.tasks, task]
+    this.setState({
+      tasks: tasks
+    })
+  }
+
+  render() {
+    return (
+      <div className="todo-app container">
+        <h1 className="center blue-text">
+          Tasks
+        </h1>
+        <Tasks tasks={this.state.tasks}/>
+        <AddTask addTask = {this.addTask}/>
+      </div>
+    );
+  }
 }
 
 export default App;
