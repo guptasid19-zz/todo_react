@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
 import Tasks from './Tasks';
 import AddTask from './AddTask';
+import TaskHandler from './services/taskHandler';
+import Login from './Login';
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      tasks: [
-        {id: 1, title: 'hello'},
-        {id: 2, title: 'hello2'}
-      ]
+      tasks: [],
+      isLoggedIn: false,
+      token: ''
+    }
+  }
+
+  async componentDidMount() {
+    try {
+      const tasks = await TaskHandler.fetchTasks(); 
+      this.setState({
+        tasks
+      })
+    } catch(error) {
+      console.log('Error fetching tasks');
     }
   }
 
@@ -21,16 +33,29 @@ class App extends Component {
     })
   }
 
+  loginUser = (token) => {
+    console.log(token);
+    this.setState({
+      isLoggedIn: true,
+      token
+    })
+  }
+
   render() {
-    return (
+    if(this.state.isLoggedIn){
+      return (
       <div className="todo-app container">
-        <h1 className="center blue-text">
-          Tasks
-        </h1>
         <Tasks tasks={this.state.tasks}/>
         <AddTask addTask = {this.addTask}/>
       </div>
-    );
+      )
+    } else {
+      return (
+        <div className="todo-app container">
+          <Login loginUser={this.loginUser}/>
+        </div>
+      )
+    }
   }
 }
 
