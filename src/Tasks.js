@@ -1,25 +1,43 @@
 import React from 'react';
-import Fragment from 'react';
+import {Link} from 'react-router-dom'
+// import Fragment from 'react';
 
-const Tasks = ({tasks}) => {
+class Tasks extends React.Component {
     
-    const taskList = tasks.length ? (
-        tasks.map(task => {
-            return (
-                <div className="collection-item" key={task.id}>
-                    <span>{task.title}</span>
-                </div>
-            )
-        })
-    ) : (
-        <p> You have no tasks.</p>
-    );
+    render() {
+        const { tasks, logout } = this.props
 
-    return(
-        <div className="tasks collection">
-            {taskList}
-        </div>
-    )
+        const taskList = tasks.length ? (
+            <div>
+                {
+                    tasks.map((task, i) => (
+                            <div>
+                                <div className="collection-item" key={`task-${i}`}>
+                                    <span>{task.title}</span>
+                                </div>
+                            </div>
+                        )
+                    )
+                }
+                <button onClick={logout}>Logout</button>
+                <Link to='/add'>Add Task</Link>
+
+            </div>
+        ) : (
+            <div>
+                <p> You have no tasks.</p>
+                <button onClick={logout}>Logout</button>
+                <Link to='/add'>Add Task</Link>
+            </div>
+        );
+    
+        return(
+            <div className="tasks collection">
+                {taskList}
+            </div>
+        )
+    }
+    
 }
 
 export default Tasks;

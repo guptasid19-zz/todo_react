@@ -1,11 +1,16 @@
 import { API_URL } from '../config';
 import axios from 'axios';
 
+const authToken = () => sessionStorage.getItem('auth-token')
+
 export default class TaskHandler {
     static fetchTasks() {
         return axios({
             method: 'get',
-            url: `${API_URL}/tasks`
+            url: `${API_URL}/tasks`,
+            headers: {
+                'Authorization': `Bearer ${authToken()}`,
+            }
         })
     };
 
@@ -18,6 +23,9 @@ export default class TaskHandler {
                 title,
                 description,
                 dueDate
+            },  
+            headers: {
+                'Authorization': `Bearer ${authToken()}`,
             }
         })
     }

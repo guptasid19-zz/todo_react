@@ -18,17 +18,20 @@ class Login extends Component {
         event.preventDefault();
         const {email, password} = this.state;
         try{
-            console.log(email)
+            console.log('email', email)
+            console.log('password', password)
+
             const response = await AuthenticationHandler.signIn(email, password);
-            console.log(response.data);
+            console.log('response', response);
             this.props.loginUser(response.data.auth_token);
         } catch(e){
             console.log(e.response);
-            alert(e.response.data.error.user_authentication);
+            alert(e);
         }
     }
 
     render() {
+        console.log('login component')
         return (
             <div>
                 <MuiThemeProvider>

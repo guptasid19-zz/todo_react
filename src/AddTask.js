@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom'
 
 class AddTask extends Component {
     constructor(props){
@@ -26,6 +27,7 @@ class AddTask extends Component {
             <div>
                 <form onSubmit={this.handleSubmit}>
                     <label>Add new task:</label>
+                    <br/>
                     <label>Title:</label>
                     <input value={this.state.title} type="text" onChange={(event) => this.setState({title: event.target.value})} />
                     <label>Description:</label>
@@ -33,6 +35,8 @@ class AddTask extends Component {
                     <label>Due Date:</label>
                     <input value={this.state.dueDate} type="text" onChange={(event) => this.setState({dueDate: event.target.value})} />
                     <input type="submit" value="Submit" />
+                    <button onClick={this.props.logout}>Logout</button>
+                    <Link to='/tasks'>Tasks</Link>
                 </form>
             </div>
         )
